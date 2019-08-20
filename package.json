@@ -1,0 +1,43 @@
+{
+  "name": "jsonresume-from-yaml",
+  "version": "0.1.0",
+  "license": "MIT",
+  "description": "Take a folder of YAML files matching jsonresume JSON Schema, create a JSON representation",
+  "files": [
+    "dist"
+  ],
+  "main": "dist",
+  "module": "dist/index.esm.js",
+  "types": "dist",
+  "scripts": {
+    "preinstall": "node -e \"if(process.env.npm_execpath.indexOf('yarn') === -1) throw new Error('frontend must be installed with Yarn: https://yarnpkg.com/')\"",
+    "pretest": "pretty-quick",
+    "version": "pretty-quick --bail",
+    "just": "just-scripts",
+    "build": "just-scripts build",
+    "test": "just-scripts test",
+    "fix": "just-scripts fix",
+    "lint": "just-scripts lint"
+  },
+  "devDependencies": {
+    "@types/core-js": "^2.5.2",
+    "@types/jest": "^24.0.15",
+    "@types/yaml": "^1.0.2",
+    "core-js": "^3.1.4",
+    "joycon": "^2.1.0",
+    "just-scripts": "^0.28.1",
+    "just-stack-single-lib": "^1.0.2",
+    "prettier": "~1.18.0",
+    "pretty-quick": "^1.11.1",
+    "ts-jest": "^24.0.2",
+    "tslib": "^1.10.0",
+    "tslint": "~5.18.0",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-config-standard": "^8.0.1",
+    "tslint-immutable": "^6.0.1",
+    "tslint-jest": "1.0.5",
+    "tslint-plugin-prettier": "^2.0.1",
+    "typescript": "~3.5.3",
+    "yaml": "^1.6.0"
+  }
+}

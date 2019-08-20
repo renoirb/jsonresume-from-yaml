@@ -1,0 +1,17 @@
+name: John Doe
+label: Software Developer
+picture: 'http://facetheforce.today/luke/400'
+email: root@example.com
+website: https://example.com
+summary: |
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+  Nam lobortis vitae metus vitae fermentum. Nam nunc ex, egestas vel
+  Duis sit amet eleifend metus, eu laoreet felis.
+location:
+  city: Montreal
+  countryCode: CA
+  region: Quebec
+profiles:
+- network: Twitter
+  username: renoirb
+  url: http://twitter.com/renoirb

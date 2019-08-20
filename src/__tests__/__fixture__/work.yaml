@@ -1,0 +1,28 @@
+---
+- company: Pied Piper
+  position: Software Developer
+  website: http://www.piedpiper.com/
+  startDate: '2017-05-01'
+  summary: |
+     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+     Nam lobortis vitae metus vitae fermentum. Nam nunc ex, egestas vel
+     finibus non, mattis efficitur eros. Nulla feugiat ipsum sit amet
+     fringilla blandit. Aliquam eu sem eu nibh pharetra molestie.
+     Duis sit amet eleifend metus, eu laoreet felis. Ut fermentum lobortis
+     mauris et ultricies. Integer iaculis, mauris vel scelerisque volutpat,
+     augue erat sodales velit, ac laoreet libero ante dignissim orci.
+     Sed vulputate nec lorem nec iaculis.
+
+     Maecenas congue mattis magna, ac sollicitudin dolor euismod eget.
+
+  highlights:
+  - |
+    In vestibulum eros quam, at semper diam sodales nec.
+    Donec quis ultrices dolor, eu sodales sem.
+  - |
+    Duis eu ipsum eu felis pellentesque scelerisque.
+    Maecenas sodales tortor orci, non convallis leo fermentum sit amet.
+  - |
+    Nullam interdum lectus ac nisi sodales blandit. Aenean maximus est sit amet sem condimentum,
+    vel blandit erat mollis. Morbi euismod quam ut nisl ullamcorper rutrum.
+    In in nisl a leo rutrum porttitor vel in tortor. Nulla molestie orci nec varius hendrerit.
