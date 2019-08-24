@@ -1,14 +1,16 @@
 /**
  * Read and walk all YAML files in a directory
- *
- * https://github.com/jprichardson/node-fs-extra
  */
 
-import { readFileSync } from "fs";
-import { AsyncLoader, default as JoyCon } from "joycon";
+// @ts-ignore
+import { schema } from "resume-schema";
+
+// z-schema should be at the same version as jsonResumeSchema
+import SchemaValidator from "z-schema";
 
 import YAML from "yaml";
-import { Resume, ResumeInterface } from "./schema";
+
+import { Resume } from ".";
 
 export const files: string[] = [
   "basics.yaml",
@@ -23,32 +25,41 @@ export const files: string[] = [
   "references.yaml"
 ];
 
-const addLoader: AsyncLoader = {
-  test: /\.ya?ml$/,
-  // tslint:disable-next-line:no-any
-  load(filepath: string): Promise<any> {
-    const contents = readFileSync(filepath, "utf8");
-    const parsed = YAML.parse(contents);
-    // tslint:disable-next-line:no-console
-    // console.log("loader", { contents, filepath, parsed });
-    return parsed;
+export class Walker {
+  private readonly sections: string[] = [];
+
+  constructor(private readonly schemaString: string = "") {
+    const applicableSchemaString = schemaString === "" ? schema : schemaString;
+    this.schemaString = applicableSchemaString;
+    const schemaHashMap = JSON.parse(applicableSchemaString);
+    if ("properties" in schemaHashMap) {
+      for (const [propName] of Object.entries(schemaHashMap)) {
+        this.sections.push(propName);
+      }
+    } else {
+      const message = "Invalid schema provided";
+      throw new Error(message);
+    }
   }
-};
 
-export const walk = async (path?: string): Promise<ResumeInterface> => {
-  const cwd: string = typeof path === "string" ? path : __dirname;
+  /**
+   * Validate an hydrated resume object against schema validator
+   * https://github.com/zaggino/z-schema/blob/master/index.d.ts#L89
+   * @param {Partial<Resume>} resume
+   */
+  public validate(resume: Partial<Resume>): boolean {
+    const schemaString = this.schemaString;
+    return new SchemaValidator().validate(resume, schemaString);
+  }
 
-  const loader = new JoyCon();
-  loader.addLoader(addLoader);
-
-  const { data } = await loader.load({
-    cwd,
-    files: ["basics.yaml"]
-  });
-
-  const resume = new Resume(data);
-
-  return resume;
-};
-
-export default walk;
+  // tslint:disable-next-line:no-any
+  public parseSection(name: string, contents: string): any {
+    if (name in this.sections) {
+      const hydrated = YAML.parse(contents);
+      return hydrated;
+    } else {
+      const message = "Invalid section provided";
+      throw new Error(message);
+    }
+  }
+}

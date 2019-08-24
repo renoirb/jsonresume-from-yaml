@@ -10,7 +10,7 @@ const prettyQuick = require("pretty-quick");
 
 const jestTaskOptions = {
   runInBand: true,
-  config: resolveCwd("./jest.config")
+  config: resolveCwd("./jest.config"),
 };
 
 task("ts:commonjs", tscTask({ module: "commonjs", outDir: "dist" }));
