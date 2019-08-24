@@ -1,25 +1,30 @@
 const {
   tscTask,
   task,
+  prettierTask,
   tslintTask,
   jestTask,
   series,
-  resolveCwd
-} = require("just-scripts");
-const prettyQuick = require("pretty-quick");
+  resolveCwd,
+} = require('just-scripts');
+const prettyQuick = require('pretty-quick');
 
 const jestTaskOptions = {
   runInBand: true,
-  config: resolveCwd("./jest.config"),
+  config: resolveCwd('./jest.config'),
 };
 
-task("ts:commonjs", tscTask({ module: "commonjs", outDir: "dist" }));
-task("ts:esnext", tscTask({ module: "esnext", outDir: "dist/esm" }));
+const prettierTaskOptions = {
+  configPath: resolveCwd('./prettier.config.json'),
+};
 
-task("build", series("ts:commonjs", "ts:esnext"));
+task('ts:commonjs', tscTask({ module: 'commonjs', outDir: 'dist' }));
+task('ts:esnext', tscTask({ module: 'esnext', outDir: 'dist/esm' }));
 
-task("lint", tslintTask());
-task("fix", tslintTask({ fix: true }));
-task("pretty-quick", () => prettyQuick);
+task('build', series('ts:commonjs', 'ts:esnext'));
 
-task("test", jestTask(jestTaskOptions));
+task('lint', tslintTask());
+task('fix', prettierTask(prettierTaskOptions));
+task('pretty-quick', () => prettyQuick);
+
+task('test', jestTask(jestTaskOptions));

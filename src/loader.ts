@@ -1,5 +1,5 @@
-import { promises as promisifiedFs, readFileSync } from "fs";
-import { default as JoyCon, MultiLoader } from "joycon";
+import { promises as promisifiedFs, readFileSync } from 'fs';
+import { default as JoyCon, MultiLoader } from 'joycon';
 
 const { readFile } = promisifiedFs;
 
@@ -7,7 +7,7 @@ const { readFile } = promisifiedFs;
  * See also BufferEncoding
  * https://github.com/nodejs/node/blob/master/lib/buffer.js#L848
  */
-export type EncodingTypes = "utf8" | "hex" | "ascii" | "binary";
+export type EncodingTypes = 'utf8' | 'hex' | 'ascii' | 'binary';
 
 export interface LoaderOptions {
   /**
@@ -33,9 +33,9 @@ export interface LoaderOptions {
 export const loader = (args: Partial<LoaderOptions> = {}): JoyCon => {
   const options: LoaderOptions = {
     cwd: __dirname,
-    inputEncoding: "utf8",
-    outputBufferEncoding: "utf8",
-    ...args
+    inputEncoding: 'utf8',
+    outputBufferEncoding: 'utf8',
+    ...args,
   };
   const { cwd, inputEncoding, outputBufferEncoding } = options;
 
@@ -48,7 +48,7 @@ export const loader = (args: Partial<LoaderOptions> = {}): JoyCon => {
     loadSync(filepath: string): string {
       const contents = readFileSync(filepath, { encoding: inputEncoding });
       return contents;
-    }
+    },
   };
 
   const out: JoyCon = new JoyCon({ cwd });

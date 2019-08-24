@@ -38,21 +38,21 @@ export type GuardedType<T extends PrimitiveOrConstructorType> = T extends new (
 export function typeGuard<T extends PrimitiveOrConstructorType>(
   // tslint:disable-next-line:no-any
   o: any,
-  className: T
+  className: T,
 ): o is GuardedType<T> {
   const localPrimitiveOrConstructor: PrimitiveOrConstructorType = className;
-  if (typeof localPrimitiveOrConstructor === "string") {
+  if (typeof localPrimitiveOrConstructor === 'string') {
     return typeof o === localPrimitiveOrConstructor;
   }
   return o instanceof localPrimitiveOrConstructor;
 }
 
 class A {
-  public a: string = "a";
+  public a: string = 'a';
 }
 
 class B extends A {
   public b: number = 5;
 }
 
-const f = typeGuard(A, "b");
+const f = typeGuard(A, 'b');

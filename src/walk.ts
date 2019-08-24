@@ -3,41 +3,41 @@
  */
 
 // @ts-ignore
-import { schema } from "resume-schema";
+import { schema } from 'resume-schema';
 
 // z-schema should be at the same version as jsonResumeSchema
-import SchemaValidator from "z-schema";
+import SchemaValidator from 'z-schema';
 
-import YAML from "yaml";
+import YAML from 'yaml';
 
-import { Resume } from ".";
+import { Resume } from '.';
 
 export const files: string[] = [
-  "basics.yaml",
-  "work.yaml",
-  "volunteer.yaml",
-  "education.yaml",
-  "awards.yaml",
-  "publications.yaml",
-  "skills.yaml",
-  "languages.yaml",
-  "interests.yaml",
-  "references.yaml"
+  'basics.yaml',
+  'work.yaml',
+  'volunteer.yaml',
+  'education.yaml',
+  'awards.yaml',
+  'publications.yaml',
+  'skills.yaml',
+  'languages.yaml',
+  'interests.yaml',
+  'references.yaml',
 ];
 
 export class Walker {
   private readonly sections: string[] = [];
 
-  constructor(private readonly schemaString: string = "") {
-    const applicableSchemaString = schemaString === "" ? schema : schemaString;
+  constructor(private readonly schemaString: string = '') {
+    const applicableSchemaString = schemaString === '' ? schema : schemaString;
     this.schemaString = applicableSchemaString;
     const schemaHashMap = JSON.parse(applicableSchemaString);
-    if ("properties" in schemaHashMap) {
+    if ('properties' in schemaHashMap) {
       for (const [propName] of Object.entries(schemaHashMap)) {
         this.sections.push(propName);
       }
     } else {
-      const message = "Invalid schema provided";
+      const message = 'Invalid schema provided';
       throw new Error(message);
     }
   }
@@ -58,7 +58,7 @@ export class Walker {
       const hydrated = YAML.parse(contents);
       return hydrated;
     } else {
-      const message = "Invalid section provided";
+      const message = 'Invalid section provided';
       throw new Error(message);
     }
   }

@@ -151,13 +151,13 @@ export class Resume implements ResumeInterface {
 
   constructor(args: Partial<Basics> = {}) {
     const basicsFallback: Basics = {
-      name: "John Doe",
-      label: "Programmer",
-      summary: "A summary of John Doe..."
+      name: 'John Doe',
+      label: 'Programmer',
+      summary: 'A summary of John Doe...',
     };
     const basics: Basics = {
       ...basicsFallback,
-      ...args
+      ...args,
     };
     this.basics = basics;
   }
@@ -169,8 +169,8 @@ export class Resume implements ResumeInterface {
 
   public addSkill(
     name: string,
-    level: string = "Master",
-    keywords: string[] = []
+    level: string = 'Master',
+    keywords: string[] = [],
   ): void {
     const item: Skill = { name, level, keywords: [...keywords] };
     this.skills.push(item);
@@ -178,7 +178,7 @@ export class Resume implements ResumeInterface {
 
   public addLanguage(
     language: string,
-    fluency: string = "Native speaker"
+    fluency: string = 'Native speaker',
   ): void {
     const item: Language = { language, fluency };
     this.languages.push(item);
