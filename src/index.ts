@@ -1,7 +1,5 @@
-/**
- * JSON Resume model
- */
-
+export * from './loader';
+export * from './utils';
 export * from './walk';
 export * from './schema';
 export * from './factory';

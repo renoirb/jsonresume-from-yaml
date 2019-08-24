@@ -23,6 +23,7 @@
     "@types/core-js": "^2.5.2",
     "@types/jest": "^24.0.15",
     "@types/yaml": "^1.0.2",
+    "@types/z-schema": " ^3.16.32",
     "core-js": "^3.1.4",
     "joycon": "^2.1.0",
     "just-scripts": "^0.28.1",

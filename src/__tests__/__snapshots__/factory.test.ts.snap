@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Resume Has sensible default when empty constructor 1`] = `
+Resume {
+  "awards": Array [],
+  "basics": Object {
+    "label": "Programmer",
+    "name": "John Doe",
+    "summary": "A summary of John Doe...",
+  },
+  "education": Array [],
+  "interests": Array [],
+  "languages": Array [],
+  "publications": Array [],
+  "references": Array [],
+  "skills": Array [],
+  "volunteer": Array [],
+  "work": Array [],
+}
+`;
+
+exports[`Resume We can provide a partially valid constructor object 1`] = `
+Resume {
+  "awards": Array [],
+  "basics": Object {
+    "email": "richard.hendriks@piedpiper.com",
+    "label": "Founder & CEO",
+    "location": Object {
+      "city": "San Francisco",
+    },
+    "name": "Richard Hendriks",
+    "phone": "(912) 555-4321",
+    "summary": "Richard hails from Tulsa. He has earned degrees from the University of Oklahoma and Stanford.",
+    "url": "https://piedpiper.com",
+  },
+  "education": Array [],
+  "interests": Array [],
+  "languages": Array [],
+  "publications": Array [],
+  "references": Array [],
+  "skills": Array [],
+  "volunteer": Array [],
+  "work": Array [],
+}
+`;

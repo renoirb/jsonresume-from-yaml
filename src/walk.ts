@@ -6,7 +6,7 @@
 import { schema } from 'resume-schema';
 
 // z-schema should be at the same version as jsonResumeSchema
-import SchemaValidator from 'z-schema';
+import { default as SchemaValidator, Options } from 'z-schema';
 
 import YAML from 'yaml';
 
@@ -25,15 +25,24 @@ export const files: string[] = [
   'references.yaml',
 ];
 
+const validatorOptions: Partial<Options> = {
+  // Nothing to put in there, for now.
+};
+
 export class Walker {
   private readonly sections: string[] = [];
 
   constructor(private readonly schemaString: string = '') {
-    const applicableSchemaString = schemaString === '' ? schema : schemaString;
+    const isEmptyCtorSchema = schemaString === '';
+    const stringifiedFallbackSchema = JSON.stringify(schema);
+    const applicableSchemaString = isEmptyCtorSchema
+      ? stringifiedFallbackSchema
+      : schemaString;
     this.schemaString = applicableSchemaString;
+    // tslint:disable:no-console
     const schemaHashMap = JSON.parse(applicableSchemaString);
     if ('properties' in schemaHashMap) {
-      for (const [propName] of Object.entries(schemaHashMap)) {
+      for (const [propName] of Object.entries(schemaHashMap.properties)) {
         this.sections.push(propName);
       }
     } else {
@@ -49,16 +58,17 @@ export class Walker {
    */
   public validate(resume: Partial<Resume>): boolean {
     const schemaString = this.schemaString;
-    return new SchemaValidator().validate(resume, schemaString);
+    return new SchemaValidator(validatorOptions).validate(resume, schemaString);
   }
 
   // tslint:disable-next-line:no-any
   public parseSection(name: string, contents: string): any {
-    if (name in this.sections) {
+    if (this.sections.includes(name)) {
       const hydrated = YAML.parse(contents);
       return hydrated;
     } else {
-      const message = 'Invalid section provided';
+      const keys = this.sections.join(', ');
+      const message = `Invalid section "${name}" provided, it is not part of the schema: ${keys}`;
       throw new Error(message);
     }
   }

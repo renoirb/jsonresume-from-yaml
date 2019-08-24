@@ -6,12 +6,17 @@ const {
   jestTask,
   series,
   resolveCwd,
+  option,
+  argv,
 } = require('just-scripts');
 const prettyQuick = require('pretty-quick');
+
+option('snapshots');
 
 const jestTaskOptions = {
   runInBand: true,
   config: resolveCwd('./jest.config'),
+  updateSnapshot: argv().snapshots ? true : false,
 };
 
 const prettierTaskOptions = {

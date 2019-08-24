@@ -46,13 +46,3 @@ export function typeGuard<T extends PrimitiveOrConstructorType>(
   }
   return o instanceof localPrimitiveOrConstructor;
 }
-
-class A {
-  public a: string = 'a';
-}
-
-class B extends A {
-  public b: number = 5;
-}
-
-const f = typeGuard(A, 'b');

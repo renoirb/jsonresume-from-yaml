@@ -2,6 +2,7 @@ const path = require('path');
 
 module.exports = {
   clearMocks: true,
+  verbose: true,
   testEnvironment: 'node',
   preset: 'ts-jest',
   testMatch: [

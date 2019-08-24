@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Walker Read directory file contents 1`] = `
+exports[`Usage example Happy-path 1`] = `
 Resume {
   "awards": Array [],
   "basics": Object {
