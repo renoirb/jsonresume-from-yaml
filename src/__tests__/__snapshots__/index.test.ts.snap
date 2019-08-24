@@ -1,6 +1,32 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Usage example Happy-path 1`] = `
+Object {
+  "email": "root@example.com",
+  "label": "Software Developer",
+  "location": Object {
+    "city": "Montreal",
+    "countryCode": "CA",
+    "region": "Quebec",
+  },
+  "name": "John Doe",
+  "picture": "http://facetheforce.today/luke/400",
+  "profiles": Array [
+    Object {
+      "network": "Twitter",
+      "url": "http://twitter.com/renoirb",
+      "username": "renoirb",
+    },
+  ],
+  "summary": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+Nam lobortis vitae metus vitae fermentum. Nam nunc ex, egestas vel
+Duis sit amet eleifend metus, eu laoreet felis.
+",
+  "website": "https://example.com",
+}
+`;
+
+exports[`Usage example Happy-path 2`] = `
 Resume {
   "awards": Array [],
   "basics": Object {

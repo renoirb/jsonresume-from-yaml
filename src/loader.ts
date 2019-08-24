@@ -30,7 +30,7 @@ export interface LoaderOptions {
   outputBufferEncoding: BufferEncoding;
 }
 
-export const loader = (args: Partial<LoaderOptions> = {}): JoyCon => {
+export const createLoader = (args: Partial<LoaderOptions> = {}): JoyCon => {
   const options: LoaderOptions = {
     cwd: __dirname,
     inputEncoding: 'utf8',

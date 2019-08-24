@@ -1,16 +1,18 @@
-import { loader, Resume, Walker } from '..';
+import { createLoader, SchemaManager, Resume } from '..';
 
 const loaderOptions = {
   cwd: __dirname + '/__fixture__',
 };
 
 describe('Usage example', () => {
-  const loaderInstance = loader(loaderOptions);
-  const helper = new Walker();
+  const loader = createLoader(loaderOptions);
+  const schema = new SchemaManager();
 
   it('Happy-path', () => {
-    const { data } = loaderInstance.loadSync({ files: ['basics.yaml'] });
-    const basics = helper.parseSection('basics', data);
+    const { data } = loader.loadSync({ files: ['basics.yaml'] });
+    const stringified = schema.parse('ResumeSchema', 'basics', data);
+    const basics = JSON.parse(stringified);
+    expect(basics).toMatchSnapshot();
     const subject = new Resume(basics);
     expect(subject).toMatchSnapshot();
   });

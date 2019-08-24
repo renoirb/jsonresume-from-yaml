@@ -12,6 +12,19 @@ import {
   Work,
 } from './schema';
 
+export interface SectionMap {
+  awards: Award;
+  basics: Basics;
+  education: Education;
+  interests: Interest;
+  languages: Language;
+  publications: Publication;
+  references: Reference;
+  skills: Skill;
+  volunteer: Volunteer;
+  work: Work;
+}
+
 export class Resume implements ResumeInterface {
   public basics!: Basics;
   public work: Work[] = [];
