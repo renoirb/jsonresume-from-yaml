@@ -20,25 +20,46 @@ const basics = {
 const mockingSchema = {
   id: 'WhateverGoes',
   $schema: 'http://json-schema.org/draft-04/schema#',
-  title: 'Resume Schema',
+  // id, above, matches title. It seems
+  title: 'Whatever Goes',
   type: 'object',
   additionalProperties: false,
   properties: { basics, bar: {}, foo: {} /* Notice ambitions is not here */ },
 };
 const schemaString = JSON.stringify(mockingSchema);
 
-describe('SchemaManager constructor', () => {
-  let subject: SchemaManager;
-  beforeEach(() => {
-    subject = new SchemaManager(schemaString);
-  });
-
+describe('SchemaManager', () => {
   it('We can inject our own initial JSONSchema schema', () => {
+    const subject = new SchemaManager(schemaString);
     expect(subject).toHaveProperty('schemasString', '[' + schemaString + ']');
     expect(subject).toHaveProperty('sections', {
       WhateverGoes: ['basics', 'bar', 'foo'],
     });
     expect(subject).toHaveProperty('schemaNames', ['WhateverGoes']);
+  });
+
+  it('schemas getter', () => {
+    const another = {
+      title: 'Another Schema',
+      id: 'AnotherSchema',
+      properties: {
+        primes: {
+          type: 'array',
+          contains: {
+            type: 'number',
+          },
+        },
+      },
+    };
+    const subject = new SchemaManager(JSON.stringify(another));
+    expect(subject.schemaNames).toMatchSnapshot();
+    expect(subject.sections).toMatchSnapshot();
+  });
+
+  it('Defaults to JSONResume, generateTypingsFileContents works too', async () => {
+    const subject = new SchemaManager();
+    expect(subject.schemaNames).toMatchSnapshot();
+    expect(subject.sections).toMatchSnapshot();
   });
 });
 
@@ -104,16 +125,25 @@ label: Software Developer
   });
 });
 
-describe('SchemaManager.generateTypingsFileContents', () => {
-  let subject: SchemaManager;
-  beforeEach(() => {
-    subject = new SchemaManager(schemaString);
+describe('SchemaManager.generateTypingsFileContents Generates TypeScript typings', () => {
+  it('Defaults to JSONResume', async () => {
+    const subject = new SchemaManager();
+    const schema = await subject.generateTypingsFileContents('ResumeSchema');
+    expect(schema).toMatchSnapshot();
   });
+  it('Can serve own schema', async () => {
+    const subject = new SchemaManager(schemaString);
+    const schema = await subject.generateTypingsFileContents('WhateverGoes');
+    expect(schema).toMatchSnapshot();
+  });
+});
 
-  it('Generates TypeScript typings', async () => {
-    const generated = await subject.generateTypingsFileContents('WhateverGoes');
-    expect(generated).toMatchSnapshot();
-    const jsonSchemasArray = subject.schemas;
-    expect(jsonSchemasArray).toMatchSnapshot();
+describe('SchemaManager.getSchema', () => {
+  it('Is possible to get one schema', async () => {
+    const subject = new SchemaManager(schemaString);
+    const schema = await subject.getSchema('WhateverGoes');
+    expect(schema).toMatchSnapshot();
+    expect(schema).toHaveProperty('id', 'WhateverGoes');
+    expect(schema).toHaveProperty('title', 'Whatever Goes');
   });
 });

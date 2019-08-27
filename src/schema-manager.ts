@@ -51,7 +51,7 @@ const bannerComment: string = `
  * @public
  */
 export class SchemaManager {
-  private readonly sections: { [name: string]: string[] } = {};
+  public readonly sections: { [name: string]: string[] } = {};
   private validator: SchemaValidator = new SchemaValidator(validatorOptions);
 
   constructor(private readonly schemasString: string = '') {
@@ -61,14 +61,13 @@ export class SchemaManager {
       ? stringifiedFallbackSchema
       : schemasString;
 
-    const schemas = [
-      {
-        ...JSON.parse(applicableSchemaString),
-      },
-    ];
-    if (!schemas[0].id) {
-      schemas[0].id = 'ResumeSchema';
+    const firstSchema = {
+      ...JSON.parse(applicableSchemaString),
+    };
+    if (!firstSchema.id) {
+      firstSchema.id = 'ResumeSchema';
     }
+    const schemas = [firstSchema];
     const firstSchemaHashMap = schemas[0];
     const allSchemasValid = this.validator.validateSchema(
       JSON.parse(JSON.stringify(schemas)),
@@ -93,6 +92,12 @@ export class SchemaManager {
     }
   }
 
+  // tslint:disable-next-line:no-any
+  public get schemas(): any {
+    const schemas = JSON.parse(this.schemasString);
+    return schemas;
+  }
+
   public get schemaNames(): string[] {
     const schemas = JSON.parse(this.schemasString);
     // tslint:disable-next-line:no-any
@@ -102,33 +107,10 @@ export class SchemaManager {
 
   // tslint:disable-next-line: no-any
   public getSchema(schemaName: string): any {
-    const schemaNames = [...this.schemaNames];
-    const hasSchema = schemaNames.includes(schemaName);
-    if (!hasSchema) {
-      const message = `Schema "${schemaName} not found, currently supported: ${schemaNames}`;
-      throw new Error(message);
-    }
-    const schemas = JSON.parse(this.schemasString);
-    const maybeSchema = schemas.filter(
-      // tslint:disable-next-line: no-any
-      (item: any): boolean => Reflect.has(item, 'id') && item.id === schemaName,
-    );
-    if (!maybeSchema) {
-      const message = `Schema "${schemaName} not found, currently supported: ${schemaNames}`;
-      throw new Error(message);
-    } else {
-      return schema;
-    }
-  }
-
-  // tslint:disable-next-line:no-any
-  public get schemas(): any[] {
-    const schemas = JSON.parse(this.schemasString);
-    return schemas;
-  }
-
-  public get foo(): string {
-    return this.schemasString;
+    // rel=#DeclareExtendZSchemaTypings in types.d.ts `declare module 'z-schema'`
+    // @ts-ignore
+    const schemaDesc = this.validator.getResolvedSchema(schemaName);
+    return schemaDesc;
   }
 
   /**
@@ -137,9 +119,6 @@ export class SchemaManager {
    */
   // tslint:disable-next-line:no-any
   public validate(schemaName: string, dto: any): boolean {
-    // const schemaDesc = this.getSchema(schemaName);
-    // const schemaDesc = JSON.parse(this.schemasString);
-    // return this.validator.validate(dto, schemaDesc[0]);
     return this.validator.validate(dto, schemaName);
   }
 
@@ -190,9 +169,7 @@ export class SchemaManager {
   public async generateTypingsFileContents(
     schemaName: string,
   ): Promise<string> {
-    // rel=#DeclareExtendZSchemaTypings in types.d.ts `declare module 'z-schema'`
-    // @ts-ignore
-    const schemaDesc = this.validator.getResolvedSchema(schemaName);
+    const schemaDesc = this.getSchema(schemaName);
     return generateTypings(schemaDesc, schemaName, { bannerComment });
   }
 }
