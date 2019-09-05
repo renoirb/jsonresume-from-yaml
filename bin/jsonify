@@ -1,0 +1,20 @@
+#!/usr/bin/env node
+
+// tslint:disable-next-line no-implicit-dependencies no-var-requires no-submodule-imports
+let fn = require('../dist/jsonify.js');
+
+if (!!fn.default) {
+  fn = fn.default;
+}
+
+const { argv = [] } = process;
+const isCli = require.main === module;
+
+const hasFileArg = isCli && [...argv].length > 2;
+
+let sourceFile = null;
+if (hasFileArg) {
+  sourceFile = argv[2];
+}
+
+Promise.all([fn(sourceFile)]);
