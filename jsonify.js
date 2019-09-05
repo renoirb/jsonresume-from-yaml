@@ -1,1 +1,1 @@
-module.exports = require('./dist/jsonify')
+module.exports = require('./dist/jsonify');

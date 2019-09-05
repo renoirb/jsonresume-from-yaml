@@ -2,6 +2,10 @@
   "name": "jsonresume-from-yaml",
   "version": "1.0.0-alpha.0",
   "description": "Take a folder of YAML files matching JSONResume JSONSchema, create a JSON representation",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/renoirb/jsonresume-from-yaml.git"
+  },
   "license": "MIT",
   "author": {
     "name": "Renoir Boulanger",
@@ -23,9 +27,9 @@
     "build": "bili",
     "fix": "just-scripts fix",
     "preinstall": "node -e \"if(process.env.npm_execpath.indexOf('yarn') === -1) throw new Error('frontend must be installed with Yarn: https://yarnpkg.com/')\"",
-    "just": "just-scripts",
     "lint": "just-scripts lint",
-    "pretest": "pretty-quick",
+    "scripts": "just-scripts",
+    "pretest": "just-scripts pretty-quick",
     "test": "just-scripts test",
     "version": "pretty-quick --bail"
   },
@@ -62,5 +66,8 @@
     "tslint-jest": "1.0.5",
     "tslint-plugin-prettier": "^2.0.1",
     "typescript": "~3.5.3"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

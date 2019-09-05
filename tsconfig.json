@@ -31,10 +31,5 @@
     // "preserveSymlinks": true,              /* Do not resolve the real path of symlinks. */
   },
   "include": ["src"],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "__tests__",
-    "**/*.test*"
-  ]
+  "exclude": ["node_modules", "dist", "__tests__", "**/*.test*"]
 }
