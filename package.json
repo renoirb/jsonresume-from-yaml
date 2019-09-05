@@ -1,8 +1,13 @@
 {
   "name": "jsonresume-from-yaml",
-  "version": "0.1.0",
+  "version": "1.0.0-alpha",
   "description": "Take a folder of YAML files matching JSONResume JSONSchema, create a JSON representation",
   "license": "MIT",
+  "author": {
+    "name": "Renoir Boulanger",
+    "email": "hello@renoirboulanger.com",
+    "url": "https://renoirb.com/#projects"
+  },
   "files": [
     "dist",
     "jsonify.js",
