@@ -1,6 +1,6 @@
 {
   "name": "jsonresume-from-yaml",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.1",
   "description": "Take a folder of YAML files matching JSONResume JSONSchema, create a JSON representation",
   "repository": {
     "type": "git",
